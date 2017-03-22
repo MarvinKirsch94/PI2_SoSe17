@@ -42,15 +42,21 @@ public class Maschine {
     }
 
     void ausMasch() {
-
+        System.out.println("Maschinennr.: " + this.getManr() + "\n"
+                        + "Preis: " + this.getPreis() + "\n"
+                        + "Maschinenbezeichnung: " + this.getMabez() + "\n"
+                        + "Standort der Maschine: " + this.getStao() + "\n"
+                        + "Kontrollwert: " + this.crt + "\n");
     }
 
     String ausMaschCSV() {
-        return "";
+
+        return this.getManr() + ";" + this.getPreis() + ";" + this.getMabez() + ";" + this.getStao();
     }
 
     double abschreibung(int laufz) {
-        return 1.0;
+
+        return this.getPreis()/laufz;
     }
 
     public int getManr() {
