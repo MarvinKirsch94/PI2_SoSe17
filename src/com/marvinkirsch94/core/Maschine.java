@@ -110,4 +110,8 @@ public class Maschine {
             return false;
         }
     }
+
+    public int getCrt() {
+        return crt;
+    }
 }
