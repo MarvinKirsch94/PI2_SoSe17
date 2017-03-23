@@ -17,39 +17,48 @@ public class MaschDV {
                             new InputStreamReader(
                             new FileInputStream(
                                     System.getProperty("user.home") + "/Desktop/MASCH.TXT")));
-        while(rc.readLine() != null) {
-            Maschine m = new Maschine(rc.readLine());
+        while(true) {
+            String s = rc.readLine();
+            if(s == null) break;
+            Maschine m = new Maschine(s);
             malist.add(m);
             m.ausMasch();
         }
         rc.close();
         //Ausgabe des Menues
-        System.out.println("(1)\tAnlegen und Einketten eines neuen Knotens zu einer gegebenen Postion in die Liste\n"
-                        + "(2)\tLoeschen eines Knotens in der Liste\n"
-                        + "(3)\tAendern der Inhalte eines Knotens\n"
-                        + "(4)\tSchreiben der Listenknoten in eine Datei\n");
-        int aw = Integer.parseInt(in.readLine());
-        try {
-            switch (aw) {
-                case 1:
-                    System.out.println(anlegen() ? "Erfolgreich!" : "Fehler! ... Versuchen sie es erneut oder etwas Anderes!");
-                    break;
-                case 2:
-                    loeschen();
-                    System.out.println("Maschine wurde geloescht!");
-                    break;
-                case 3:
-                    System.out.println(aendern() ? "Erfolgreich!" : "HIER IST ETWAS GRAVIEREND FALSCH GELAUFEN!!!");
-                    break;
-                case 4:
-                    System.out.println(writeToData() ? "Erfolgreich!" : "Versuchen sie es erneut oder geben sie einen " +
-                            "anderen Befehl ein.");
-                    break;
+        boolean loop = true;
+        do {
+            System.out.println("(1)\tAnlegen und Einketten eines neuen Knotens zu einer gegebenen Postion in die Liste\n"
+                    + "(2)\tLoeschen eines Knotens in der Liste\n"
+                    + "(3)\tAendern der Inhalte eines Knotens\n"
+                    + "(4)\tSchreiben der Listenknoten in eine Datei\n"
+                    + "(5)\tAbbrechen\n");
+            int aw = Integer.parseInt(in.readLine());
+            try {
+                switch (aw) {
+                    case 1:
+                        System.out.println(anlegen() ? "Erfolgreich!" : "Fehler! ... Versuchen sie es erneut oder etwas Anderes!");
+                        break;
+                    case 2:
+                        loeschen();
+                        System.out.println("Maschine wurde geloescht!");
+                        break;
+                    case 3:
+                        System.out.println(aendern() ? "Erfolgreich!" : "HIER IST ETWAS GRAVIEREND FALSCH GELAUFEN!!!");
+                        break;
+                    case 4:
+                        System.out.println(writeToData() ? "Erfolgreich!" : "Versuchen sie es erneut oder geben sie einen " +
+                                "anderen Befehl ein.");
+                        break;
+                    case 5:
+                        System.out.println("Beenden . . .");
+                        loop = false;
+                        break;
+                }
+            } catch (IOException ioe) {
+                System.err.println(ioe + "\n" + "Whooops da ist was schief gegangen!!");
             }
-        }
-        catch(IOException ioe) {
-            System.err.println(ioe + "\n" + "Whooops da ist was schief gegangen!!");
-        }
+        } while(loop);
 
     }
 
