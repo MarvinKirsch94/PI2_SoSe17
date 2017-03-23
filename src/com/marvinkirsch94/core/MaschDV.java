@@ -10,55 +10,101 @@ import java.util.ArrayList;
 public class MaschDV {
 
     private static ArrayList<Maschine> malist = new ArrayList<>();
+    private static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(String args[]) throws IOException {
-        BufferedReader in = new BufferedReader(
+        BufferedReader rc = new BufferedReader(
                             new InputStreamReader(
                             new FileInputStream(
                                     System.getProperty("user.home") + "/Desktop/MASCH.TXT")));
-        while(in.readLine() != null) {
-            Maschine m = new Maschine(in.readLine());
+        while(rc.readLine() != null) {
+            Maschine m = new Maschine(rc.readLine());
             malist.add(m);
             m.ausMasch();
         }
-        in.close();
+        rc.close();
         //Ausgabe des Menues
         System.out.println("(1)\tAnlegen und Einketten eines neuen Knotens zu einer gegebenen Postion in die Liste\n"
                         + "(2)\tLoeschen eines Knotens in der Liste\n"
                         + "(3)\tAendern der Inhalte eines Knotens\n"
                         + "(4)\tSchreiben der Listenknoten in eine Datei\n");
-        BufferedReader rc = new BufferedReader(new InputStreamReader(System.in));
-        int aw = Integer.parseInt(rc.readLine());
-        switch(aw) {
-            case 1:
-                System.out.println(anlegen());
-                break;
-            case 2:
-                System.out.println(loeschen());
-                break;
-            case 3:
-                System.out.println(aendern());
-                break;
-            case 4:
-                System.out.println(writeToData());
-                break;
+        int aw = Integer.parseInt(in.readLine());
+        try {
+            switch (aw) {
+                case 1:
+                    System.out.println(anlegen() ? "Erfolgreich!" : "Fehler! ... Versuchen sie es erneut oder etwas Anderes!");
+                    break;
+                case 2:
+                    loeschen();
+                    System.out.println("Maschine wurde geloescht!");
+                    break;
+                case 3:
+                    System.out.println(aendern() ? "Erfolgreich!" : "HIER IST ETWAS GRAVIEREND FALSCH GELAUFEN!!!");
+                    break;
+                case 4:
+                    System.out.println(writeToData() ? "Erfolgreich!" : "Versuchen sie es erneut oder geben sie einen " +
+                            "anderen Befehl ein.");
+                    break;
+            }
         }
+        catch(IOException ioe) {
+            System.err.println(ioe + "\n" + "Whooops da ist was schief gegangen!!");
+        }
+
     }
 
-    private static boolean anlegen() {
-
-        return true;
+    private static boolean anlegen() throws IOException {
+        System.out.println("Geben sie csv String zum deffinieren der neuen Maschine ein: ");
+        String csv = in.readLine();
+        System.out.println("Geben sie den Index der Stelle an welcher sie die Maschine einfuegen wollen: ");
+        int index = Integer.parseInt(in.readLine());
+        Maschine m = new Maschine(csv);
+        malist.add(index, m);
+        return m.getCrt()==1;
     }
 
-    private static boolean loeschen() {
-        return true;
+    private static void loeschen() throws IOException {
+        System.out.println("Geben sie den Index der Maschine an, die sie loeschen wollen: ");
+        int index = Integer.parseInt(in.readLine());
+        malist.remove(index);
     }
 
-    private static boolean aendern() {
-        return true;
+    private static boolean aendern() throws IOException {
+        System.out.println("Geben sie den Index der Maschine an, die sie aendern wollen: ");
+        int index = Integer.parseInt(in.readLine());
+        malist.get(index).ausMasch();
+        malist.get(index).ausMaschCSV();
+        System.out.println("s.o. die Maschine ... \n " +
+                "Geben sie einen neuen csv String um die Maschine zu aendern: ");
+        String csv = in.readLine();
+        Maschine m = new Maschine(csv);
+        if(m.getCrt()==1) {
+            System.out.println("Hier die neue Maschine: " + "\n" + m.ausMaschCSV());
+            m.ausMasch();
+            malist.remove(index);
+            malist.add(index, m);
+            return true;
+        } else {
+            System.out.println("csv String Fehlerhaft! ... neustart ...");
+            aendern();
+        }
+        return false;
     }
 
-    private static boolean writeToData() {
+    private static boolean writeToData() throws IOException {
+        try {
+            BufferedWriter out = new BufferedWriter(
+                    new OutputStreamWriter(
+                            new FileOutputStream(System.getProperty("user.home") + "/Desktop/MASCH.TXT"), "utf-8"));
+            for (Maschine ma : malist) {
+                out.write(ma.ausMaschCSV());
+                out.newLine();
+            }
+            out.close();
+        } catch(IOException ioe) {
+            System.err.println(ioe + "\n");
+            return false;
+        }
         return true;
     }
 }
