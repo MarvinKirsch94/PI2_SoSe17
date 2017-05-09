@@ -1,4 +1,4 @@
-package com.marvinkirsch94.core;
+package com.marvinkirsch94.core.versuch1;
 
 /**
  * Created by Marvin Kirsch on 21.03.2017.

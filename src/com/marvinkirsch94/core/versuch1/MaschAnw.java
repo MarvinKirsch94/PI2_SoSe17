@@ -1,4 +1,4 @@
-package com.marvinkirsch94.core;
+package com.marvinkirsch94.core.versuch1;
 
 import java.io.*;
 import java.util.ArrayList;
