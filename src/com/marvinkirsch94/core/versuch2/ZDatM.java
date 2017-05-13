@@ -2,11 +2,8 @@ package com.marvinkirsch94.core.versuch2;
 
 import com.marvinkirsch94.core.versuch1.Maschine;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.util.LinkedList;
+import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Created by Marvin Kirsch on 24.04.2017.
@@ -19,16 +16,48 @@ public class ZDatM {
     private BufferedReader br1;
     private FileWriter fw1;
     private PrintWriter pr1;
-    private LinkedList<Maschine> dsliste;
+    private ArrayList<Maschine> dsliste;
+
     //b
     //constructor
-    public ZDatM(String dsn, int mod) {
-
+    public ZDatM(String dsn, int mod) throws FileNotFoundException, IOException {
+        switch(mod) {
+            case 1:
+                //read
+                File f = new File(dsn);
+                fr1 = new FileReader(dsn);
+                br1 = new BufferedReader(fr1);
+                this.einlesen();
+                fw1 = null;
+                pr1 = null;
+            case 2:
+                //write
+                fw1 = new FileWriter(dsn);
+                pr1 = new PrintWriter(dsn);
+        }
     }
+
     //c
-    public int einlesen() {
+    public int einlesen() throws IOException {
+        int zeile = 0;
+        int data = 0;
+        while(true) {
+            String s = this.br1.readLine();
+            if(s == null) {
+                break;
+            }
+            Maschine m = new Maschine(s);
+            if(m.getCrt() != 1) {
+                System.err.println("Fehlerhafte Maschine in Zeile: " + zeile + "!");
+            } else {
+                this.dsliste.add(m);
+                data++;
+            }
+            zeile++;
+        }
         return 0;
     }
+
     public void list2Dat() {
 
     }
