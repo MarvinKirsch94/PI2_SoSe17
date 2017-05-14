@@ -33,11 +33,13 @@ public class ZDatM {
             case 2:
                 //write
                 fw1 = new FileWriter(dsn);
-                pr1 = new PrintWriter(dsn);
+                pr1 = new PrintWriter(fw1);
         }
     }
 
     //c
+
+    //c1
     public int einlesen() throws IOException {
         int zeile = 0;
         int data = 0;
@@ -55,11 +57,23 @@ public class ZDatM {
             }
             zeile++;
         }
+        return data;
+    }
+
+    //c2
+    public void list2Dat() {
+        for(Maschine m : dsliste) {
+            this.pr1.write(m.toString() + "\n");
+        }
+    }
+
+    //c3
+    public int bubble(int iox) {
         return 0;
     }
 
-    public void list2Dat() {
-
+    //c4
+    public int sortDA(int iox) {
+        return 0;
     }
-
 }
