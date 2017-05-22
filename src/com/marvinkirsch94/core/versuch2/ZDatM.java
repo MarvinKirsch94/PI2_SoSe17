@@ -20,20 +20,26 @@ public class ZDatM {
 
     //b
     //constructor
-    public ZDatM(String dsn, int mod) throws FileNotFoundException, IOException {
+    public ZDatM(String dsn, int mod) throws IOException {
         switch(mod) {
             case 1:
                 //read
                 File f = new File(dsn);
                 fr1 = new FileReader(dsn);
                 br1 = new BufferedReader(fr1);
+                this.dsliste = new ArrayList<>();
                 this.einlesen();
                 fw1 = null;
                 pr1 = null;
+                break;
             case 2:
                 //write
                 fw1 = new FileWriter(dsn);
                 pr1 = new PrintWriter(fw1);
+                dsliste = null;
+                fr1 = null;
+                br1 = null;
+                break;
         }
     }
 
@@ -62,18 +68,113 @@ public class ZDatM {
 
     //c2
     public void list2Dat() {
-        for(Maschine m : dsliste) {
+        for(Maschine m : this.dsliste) {
             this.pr1.write(m.toString() + "\n");
         }
     }
 
     //c3
     public int bubble(int iox) {
-        return 0;
+        boolean isNotSorted = true;
+        int c = 0;
+        while(isNotSorted) {
+            isNotSorted = false;
+            for(int i = 0; i < this.dsliste.size() - 1; i++) {
+                switch(iox) {
+                    case 1:
+                        //mabez
+                        if (this.dsliste.get(i).getMabez().compareTo(this.dsliste.get(i + 1).getMabez()) > 0) {
+                            Maschine tm = this.dsliste.get(i);
+                            this.dsliste.remove(i);
+                            this.dsliste.add(i + 1, tm);
+                        }
+                        isNotSorted = true;
+                        break;
+                    case 2:
+                        //preis
+                        if (this.dsliste.get(i).getPreis() > this.dsliste.get(i + 1).getPreis()) {
+                            Maschine tm = this.dsliste.get(i);
+                            this.dsliste.remove(i);
+                            this.dsliste.add(i + 1, tm);
+                        }
+                        isNotSorted = true;
+                        break;
+                    case 3:
+                        //stao
+                        if (this.dsliste.get(i).getStao().compareTo(this.dsliste.get(i + 1).getStao()) > 0) {
+                            Maschine tm = this.dsliste.get(i);
+                            this.dsliste.remove(i);
+                            this.dsliste.add(i + 1, tm);
+                        }
+                        isNotSorted = true;
+                        break;
+                }
+                if(isNotSorted) {
+                    c++;
+                }
+            }
+        }
+        return c;
     }
 
     //c4
     public int sortDA(int iox) {
-        return 0;
+        int c = 0;
+        ArrayList<Maschine> hlist = new ArrayList<>();
+        for(Maschine m : this.dsliste) {
+            if(hlist.isEmpty()) {
+                hlist.add(m);
+                continue;
+            }
+            switch(iox) {
+                case 1:
+                    //mabez
+                    if (hlist.get(hlist.size()).getMabez().compareToIgnoreCase(m.getMabez()) < 0) {
+                        hlist.add(hlist.size(), m);
+                    } else if(hlist.get(0).getMabez().compareToIgnoreCase(m.getMabez()) > 0) {
+                        hlist.add(0, m);
+                    } else {
+                        for(int i = 1; i < hlist.size(); i++) {
+                            if(hlist.get(i).getMabez().compareToIgnoreCase(m.getMabez()) > 0) {
+                                hlist.add(i, m);
+                            }
+                        }
+                    }
+                    c++;
+                    break;
+                case 2:
+                    //preis
+                    if (hlist.get(hlist.size()).getPreis() < m.getPreis()) {
+                        hlist.add(hlist.size(), m);
+                    } else if(hlist.get(0).getPreis() > m.getPreis()) {
+                        hlist.add(0, m);
+                    } else {
+                        for(int i = 1; i < hlist.size(); i++) {
+                            if(hlist.get(i).getPreis() > m.getPreis()) {
+                                hlist.add(i, m);
+                            }
+                        }
+                    }
+                    c++;
+                    break;
+                case 3:
+                    //stao
+                    if (hlist.get(hlist.size()).getStao().compareToIgnoreCase(m.getStao()) < 0) {
+                        hlist.add(hlist.size(), m);
+                    } else if(hlist.get(0).getStao().compareToIgnoreCase(m.getStao()) > 0) {
+                        hlist.add(0, m);
+                    } else {
+                        for(int i = 1; i < hlist.size(); i++) {
+                            if(hlist.get(i).getStao().compareToIgnoreCase(m.getStao()) > 0) {
+                                hlist.add(i, m);
+                            }
+                        }
+                    }
+                    c++;
+                    break;
+            }
+        }
+        dsliste = hlist;
+        return c;
     }
 }
