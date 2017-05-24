@@ -1,8 +1,6 @@
 package com.marvinkirsch94.core.versuch2;
 
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -29,8 +27,11 @@ public class Mat {
             String c[] = temp.split(";");
 
             //m
+            //test
+            //System.out.println("m vorher: " + m);
             if (this.m != c.length && this.m != 0) {
                 this.crt = -1;
+                //System.out.println("crt: " + crt);
             }
             this.m = c.length;
 
@@ -42,7 +43,8 @@ public class Mat {
 
         //init a[][]
         this.a = new double[this.n][this.m];
-
+        //test
+        //System.out.println("crt: " + crt);
         //befuellen von a wenn crt immer noch 1 ist um Fehler zu vermeiden
         if (this.crt == 1) {
             for (int y = 0; y < this.n; y++) {
@@ -74,8 +76,11 @@ public class Mat {
                 for (int x = 0; x < this.m; x++) {
                     out += (x == m - 1 ? a[y][x] + "" : a[y][x] + ";");
                 }
-                fx.write(out + "\n");
+                fx.write(out);
+                fx.write("\n");
+                fx.flush();
             }
+            fx.close();
         } catch (Exception e) {
             System.err.println(e + "\nIch hab ein schlechtes gefuehl bei der Sache ... ");
             return false;

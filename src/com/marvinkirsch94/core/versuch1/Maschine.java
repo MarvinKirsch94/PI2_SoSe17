@@ -43,10 +43,10 @@ public class Maschine {
 
     void ausMasch() {
         System.out.println("Maschinennr.: " + this.getManr() + "\n"
-                        + "Preis: " + this.getPreis() + "\n"
-                        + "Maschinenbezeichnung: " + this.getMabez() + "\n"
-                        + "Standort der Maschine: " + this.getStao() + "\n"
-                        + "Kontrollwert: " + this.crt + "\n");
+                + "Preis: " + this.getPreis() + "\n"
+                + "Maschinenbezeichnung: " + this.getMabez() + "\n"
+                + "Standort der Maschine: " + this.getStao() + "\n"
+                + "Kontrollwert: " + this.crt + "\n");
     }
 
     String ausMaschCSV() {

@@ -1,9 +1,8 @@
 package com.marvinkirsch94.core.versuch2;
 
-import com.marvinkirsch94.core.versuch1.Maschine;
-
 import java.io.*;
 import java.util.ArrayList;
+import com.marvinkirsch94.core.versuch1.Maschine;
 
 /**
  * Created by Marvin Kirsch on 24.04.2017.
@@ -47,6 +46,7 @@ public class ZDatM {
 
     //c1
     public int einlesen() throws IOException {
+        this.dsliste.clear();
         int zeile = 0;
         int data = 0;
         while(true) {
