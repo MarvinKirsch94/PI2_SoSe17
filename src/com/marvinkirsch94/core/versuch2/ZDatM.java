@@ -130,7 +130,7 @@ public class ZDatM {
                 case 1:
                     //mabez
                     if (hlist.get(hlist.size()).getMabez().compareToIgnoreCase(m.getMabez()) < 0) {
-                        hlist.add(hlist.size(), m);
+                        hlist.add(m);
                     } else if(hlist.get(0).getMabez().compareToIgnoreCase(m.getMabez()) > 0) {
                         hlist.add(0, m);
                     } else {
@@ -145,7 +145,7 @@ public class ZDatM {
                 case 2:
                     //preis
                     if (hlist.get(hlist.size()).getPreis() < m.getPreis()) {
-                        hlist.add(hlist.size(), m);
+                        hlist.add(m);
                     } else if(hlist.get(0).getPreis() > m.getPreis()) {
                         hlist.add(0, m);
                     } else {
@@ -160,7 +160,7 @@ public class ZDatM {
                 case 3:
                     //stao
                     if (hlist.get(hlist.size()).getStao().compareToIgnoreCase(m.getStao()) < 0) {
-                        hlist.add(hlist.size(), m);
+                        hlist.add(m);
                     } else if(hlist.get(0).getStao().compareToIgnoreCase(m.getStao()) > 0) {
                         hlist.add(0, m);
                     } else {
